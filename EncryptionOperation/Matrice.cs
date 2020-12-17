@@ -61,46 +61,8 @@ namespace EncryptionOperation
             }
         }
 
-        /** Opération : Transposé d'une Matrice 
-         *  Condition : La Matrice doit être Carrée afin de trouver sa Transposée 
-         *  
-         *  @return Matrice */
-        public Matrice Transposee()
-        {
-            if (!EstCarree)
-            {
-                Matrice matrice = new Matrice(ColSize, RowSize);
-                for (int i = 0; i < RowSize; i++)
-                {
-                    for (int j = 0; j < ColSize; j++)
-                    {
-                        matrice[j, i] = Data[i, j];
-                    }
-                }
-                return matrice;
-            }
 
-            Matrice matrix = new Matrice(RowSize, ColSize);
-            for (int i = 0; i < RowSize; i++)
-            {
-                for (int j = 0; j < ColSize; j++)
-                {
-                    if (i == j) // Pour ne pas modifier la Trace
-                    {
-                        matrix[i, j] = Data[i, j];
-                        break;
-                    }
-                    // Swap
-                    string tempo = Data[i, j];
-                    matrix[i, j] = Data[j, i];
-                    matrix[j, i] = tempo;
-                }
-            }
-            return matrix;
-
-        }
-
-       
+   
         /**********************************************************************************************/
         /***************                MANIPULATION DES DONNEES DE LA MATRICE          ***************/
         /**********************************************************************************************/
