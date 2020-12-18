@@ -13,14 +13,19 @@ namespace EncryptionOperation
     {
         static void Main(string[] args)
         {
-            Cryptage m = new Cryptage("Bonjour, je m'ap");
-            string mot = m.TraspositionString(1234);
-            Console.WriteLine(mot);
+            string message = "ce cours de mathématiques est très intéressant";
+            string cle = "7 1 4 5 2 3 8 6";
+            string message2 = Chiffrement.Transposition(message, cle);
+            Console.WriteLine("Message chiffre : " + message2);
 
-            // Transposition de nouveau pour revenir à la phrase initiale
-            Cryptage p = new Cryptage(mot);
-            string mots = p.TraspositionString(1234);
-            Console.WriteLine(mots);
+            string nom = "S";
+            byte[] tab = Chiffrement.Encodage(nom);
+            for(int i=0;  i< tab.Length; i++)
+            {
+                Console.WriteLine(tab[i]);
+            }
+
+            Console.WriteLine(Chiffrement.AsciiToBinary(nom));
         }
     }
 }

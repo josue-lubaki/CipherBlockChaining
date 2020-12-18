@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,49 +10,10 @@ namespace EncryptionOperation
         //******************************************
         // Methode de Chiffrement
         // @return 
-        static string Chiffrer(string message, string cle)
+        public static string Chiffrer(string message, string cle)
         {
-            Matrice uneMatrice = FillMatrice(message,cle);
-
-            Matrice uneMatriceTransposee = Transposition(uneMatrice, cle);
-
-
-           
-
 
             return null;
-        }
-
-
-
-        //******************************************
-        // Methode de Dechiffrement
-        // @return 
-        static string Dechiffrer(string message, string cle)
-        {
-
-
-            return null;
-        }
-
-
-
-        //******************************************
-        // Methode de Chiffrement
-        // @return byte[]
-        private static byte[] Encodage(string data)
-        {
-            byte[] bytes = Encoding.ASCII.GetBytes(data);
-            return bytes;
-        }
-
-        //******************************************
-        // Methode de Dechiffrement
-        // @return string
-        private static string Decodage(byte[] bytes)
-        {
-            string data = Encoding.ASCII.GetString(bytes);
-            return data;
         }
 
 
@@ -85,27 +47,33 @@ namespace EncryptionOperation
 
 
 
-        private static string Transposition(Matrice uneMatrice,string cle)
+        public static string Transposition(string message, string cle)
         {
+            Matrice uneMatrice = FillMatrice(message, cle);
+
             string[] cleSansEspace = cle.Split(' ');
             // il va falloir trier le tableau de caractère
 
             string messageTranspose = "";//varible qui capture le message qu'on transpose
-            
-            SortedList<int, int> listeTransposition =new SortedList<int, int>();//on associe a chaque chiffre de la cle sa position dans la cle
 
-            for (int i = 0; i< cleSansEspace.Length; i++)
+            SortedList listeTransposition = new SortedList();//on associe a chaque chiffre de la cle sa position dans la cle
+
+            for (int i = 0; i < cleSansEspace.Length; i++)
             {
-                listeTransposition.Add(int.Parse(cleSansEspace[i]),i);
+                listeTransposition.Add(int.Parse(cleSansEspace[i]), i);
             }
 
+            IList listKeys = listeTransposition.GetKeyList();
 
-            for(int j = 0; j< cleSansEspace.Length; j++)
+            for (int j = (int)listKeys[0]; j <= listKeys.Count; j++)
             {
-                int positionDansCle = listeTransposition[j];
 
-                for (int k = 0; k < uneMatrice.RowSize; k++) {
-                    if(uneMatrice[k,positionDansCle] != null)
+                int positionDansCle = (int)listeTransposition[j];
+
+                for (int k = 0; k < uneMatrice.RowSize; k++)
+                {
+
+                    if (uneMatrice[k, positionDansCle] != null)
                         messageTranspose += uneMatrice[k, positionDansCle];
 
                 }
@@ -113,5 +81,50 @@ namespace EncryptionOperation
 
             return messageTranspose;
         }
+
+
+        public static string AsciiToBinary(string message)
+        {
+            string result="";
+
+            foreach(char ch in message)
+            {
+                result +=(Convert.ToString((int)ch, 2)).Substring(2);// on convertit les lettres sur 5 bits
+            }
+
+            return result;
+        }
+
+
+        //******************************************
+        // Methode de Dechiffrement
+        // @return 
+        public static string Dechiffrer(string message, string cle)
+        {
+
+
+            return null;
+        }
+
+
+
+        //******************************************
+        // Methode de Chiffrement
+        // @return byte[]
+        public static byte[] Encodage(string data)
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(data);
+            return bytes;
+        }
+
+        //******************************************
+        // Methode de Dechiffrement
+        // @return string
+        private static string Decodage(byte[] bytes)
+        {
+            string data = Encoding.ASCII.GetString(bytes);
+            return data;
+        }
+
     }
 }
