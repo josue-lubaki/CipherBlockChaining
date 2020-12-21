@@ -15,7 +15,7 @@ namespace EncryptionOperation
         {
             string message = "ce cours de mathematiques est tres interessant";
             string cle = "7 1 4 5 2 3 8 6";
-            //string message2 = Chiffrement.Transposition(message, cle);
+            string message2 = Chiffrement.Transposition(message, cle);
            // string message3 = Chiffrement.Transposition(message2, cle);
             //Console.WriteLine("Message chiffre : " + message2);
             //Console.WriteLine("Message chiffre : " + message3);
@@ -25,18 +25,32 @@ namespace EncryptionOperation
             byte[] tabA = Chiffrement.ToBinary(nom);
             byte[] tabB = Chiffrement.ToBinary('F');
             byte[] tab = Chiffrement.ToBinary(nom);
-            for(int i=0;  i< tab.Length; i++)
-            {
-                Console.WriteLine(tab[i]);
-            }
-            byte[] c = Chiffrement.ToBinary('A');
-            //Console.WriteLine(Chiffrement.AsciiToBinary(nom));
-            byte[] unTab = (Chiffrement.OperationXor(tabA,tabB));
-            Chiffrement.AfficheTabBytes(unTab);
-
+           
             
 
             Console.WriteLine("message chiffre---> "+Chiffrement.Chiffrer(message, cle));
+            byte[] vi = Encoding.ASCII.GetBytes("S");
+            Chiffrement.AfficheTabBytes(vi);
+            Console.WriteLine("$$$$$$$$$$$$$$$$");
+
+           byte[] msgToBytes = Encoding.ASCII.GetBytes(message2);
+            int[] decValue = new int[message2.Length];
+            Chiffrement.AfficheTabBytes(msgToBytes);
+            Console.WriteLine("$"+Encoding.Default.GetString(msgToBytes));
+
+
+
+            decValue[0] = msgToBytes[0] ^ vi[0];
+            Console.WriteLine("$ cash:" + msgToBytes[0]);
+            Console.WriteLine("decavlue  "+decValue[0]);
+
+
+            byte[] untableau = Encoding.ASCII.GetBytes(decValue[0].ToString());
+            Chiffrement.AfficheTabBytes(untableau);
+
+            Console.WriteLine("resultat final :"+Encoding.UTF8.GetString(BitConverter.GetBytes(decValue[0])));
+
+
         }
     }
 }
