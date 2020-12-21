@@ -12,8 +12,20 @@ namespace EncryptionOperation
         // @return 
         public static string Chiffrer(string message, string cle)
         {
+            //chiffrement par transposition
+            string messageTranspose = Transposition(message, cle);
 
-            return null;
+
+            //CBC
+            byte[] VI = ToBinary('F');
+
+            List<byte[]> listBytes = ChiffrementCbc(messageTranspose,VI);
+
+            string text = fromCbcToString(listBytes);
+
+       
+
+            return text;
         }
 
 
@@ -83,17 +95,66 @@ namespace EncryptionOperation
         }
 
 
-        public static string AsciiToBinary(string message)
+        /**
+         *  Methode Permettant de transformer un char en Binaire
+         *  @return string
+         */
+        public static List<byte> AsciiToBinary(string message)
         {
-            string result="";
+            int taille = message.Length;
+            List<byte> result = new List<byte>();
 
-            foreach(char ch in message)
+            // Tant qu'on n'a pas terminer de parcourir chaque lettre du message
+            for (int i = 0; i < taille; i++)
             {
-                result +=(Convert.ToString((int)ch, 2)).Substring(2);// on convertit les lettres sur 5 bits
+                // Decoupage de chaque caractère composant le message | Recupère une lettre
+                char letter = Char.Parse(message.Substring(i, 1));
+
+                // Methode  ary() transforme chaque caractère en tableau de 5 bits (ex : S = 10011)
+                byte[] bytes = ToBinary(letter);
+
+                // On ajoute chaque bit dans la liste de bit
+                foreach (byte b in bytes)
+                {
+                    result.Add(b);
+                }
             }
 
             return result;
         }
+
+        /**
+        *  Methode Permettant de transformer un char en Binaire
+        *  @return byte[]
+        */
+        public static byte[] ToBinary(char character)
+        {
+            byte[] bytes = new byte[7]; //Besoin de 7 bits pour un caractère
+            string st = (Convert.ToString((int)character, 2));// on convertit la lettre sur 7 bits;
+
+            // on a 7 bits, On insère chaque bit dans le tableau de bits
+            for (int i = 0; i < st.Length; i++)
+            {
+                bytes[i] = byte.Parse(st.Substring(i, 1));
+            }
+
+            return bytes;
+        }
+
+        /**
+         * Methode qui permet d'afficher les contenues byte par byte d'un character (ex: S -> 10010)
+         * 
+         */
+        public static void AfficheListBytes(List<byte> table)
+        {
+            foreach (byte b in table)
+            {
+                Console.Write(b);
+            }
+        }
+
+
+
 
 
         //******************************************
@@ -125,6 +186,69 @@ namespace EncryptionOperation
             string data = Encoding.ASCII.GetString(bytes);
             return data;
         }
+
+
+
+        public static byte[] OperationXor(byte[] tabA, byte[] tabB)
+        {
+            byte[] unTab = new byte[tabA.Length];
+            for(int i =0; i< tabA.Length; i++)
+            {
+                unTab[i] = (byte)(tabA[i] ^ tabB[i]); 
+            }
+
+            return unTab;
+        }
+
+        /**
+         * Methode qui permet d'afficher les contenues byte par byte d'un character (ex: S -> 10010)
+         */
+        public static void AfficheTabBytes(byte[] table)
+        {
+            foreach (byte b in table)
+            {
+                Console.Write(b);
+            }
+        }
+
+        public static List<byte[]> ChiffrementCbc(string messageTranspose, byte[] VI)
+        {
+            List<byte[]> result= new List<byte[]>();
+            for(int i = 0; i < messageTranspose.Length; i++)
+            {
+                char letter = Char.Parse(messageTranspose.Substring(i, 1));
+                byte[] tabLetter = ToBinary(letter);
+              
+                if (i == 0)
+                {
+                    byte[] Einitial = OperationXor(tabLetter, VI);
+                    result.Add(Einitial);
+                    
+                }
+                else
+                {   
+                    byte[] Ecourant = OperationXor(tabLetter, result[i - 1]);
+                    result.Add(Ecourant);
+                }
+            }
+
+            return result;
+        }
+
+
+        public static string fromCbcToString(List<byte[]> list)
+        {
+            string result = "";
+            string str = "";
+            for(int i= 0;i < list.Count;i++)
+            {
+                str = Encoding.UTF8.GetString(list[i], 0, list[i].Length);
+
+                result += str;
+            }
+            return result;
+        }
+
 
     }
 }
