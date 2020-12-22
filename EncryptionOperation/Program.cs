@@ -13,24 +13,19 @@ namespace EncryptionOperation
     {
         static void Main(string[] args)
         {
-            string message = "ce cours de mathematiques est tres interessant";
-            string cle = "7 1 4 5 2 3 8 6";
-            string message2 = Chiffrement.Transposition(message, cle);
-           // string message3 = Chiffrement.Transposition(message2, cle);
-            //Console.WriteLine("Message chiffre : " + message2);
-            //Console.WriteLine("Message chiffre : " + message3);
-
-
-            char nom = 'S';
-            byte[] tabA = Chiffrement.ToBinary(nom);
-            byte[] tabB = Chiffrement.ToBinary('F');
-            byte[] tab = Chiffrement.ToBinary(nom);
-           
+            string message = "jonathan";
+            string cle = "9 1 4 5";
+            string messageChiffre = Chiffrement.Chiffrer(message,cle);
+            Console.WriteLine("Message chiffre ---> "+messageChiffre);
+            string messageDechiffre = Chiffrement.Dechiffrer(messageChiffre, cle);
+            Console.WriteLine("Message Dechiffre ---> " + messageDechiffre);
+            Console.WriteLine("TRanspose du msg dechiffre = " + Chiffrement.TranspositionInverse(messageDechiffre, cle));
             
 
-            Console.WriteLine("message chiffre---> "+Chiffrement.Chiffrer(message, cle));
-            byte[] vi = Encoding.ASCII.GetBytes("S");
+            /*byte[] vi = Encoding.ASCII.GetBytes("S");
             Chiffrement.AfficheTabBytes(vi);
+            Console.WriteLine("vi[0] : "+vi[0]);
+
             Console.WriteLine("$$$$$$$$$$$$$$$$");
 
            byte[] msgToBytes = Encoding.ASCII.GetBytes(message2);
@@ -40,6 +35,7 @@ namespace EncryptionOperation
 
 
 
+           
             decValue[0] = msgToBytes[0] ^ vi[0];
             Console.WriteLine("$ cash:" + msgToBytes[0]);
             Console.WriteLine("decavlue  "+decValue[0]);
@@ -49,6 +45,11 @@ namespace EncryptionOperation
             Chiffrement.AfficheTabBytes(untableau);
 
             Console.WriteLine("resultat final :"+Encoding.UTF8.GetString(BitConverter.GetBytes(decValue[0])));
+
+            */
+
+
+
 
 
         }

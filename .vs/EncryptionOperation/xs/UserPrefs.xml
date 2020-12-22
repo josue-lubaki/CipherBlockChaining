@@ -1,16 +1,20 @@
 ﻿<Properties StartupConfiguration="{75B3C7BC-0331-4A86-9AA9-69F0DD9C5C08}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="EncryptionOperation/Chiffrement.cs">
     <Files>
-      <File FileName="EncryptionOperation/Chiffrement.cs" Line="214" Column="28" />
-      <File FileName="EncryptionOperation/Program.cs" />
+      <File FileName="EncryptionOperation/Chiffrement.cs" Line="27" Column="1" />
+      <File FileName="EncryptionOperation/Program.cs" Line="18" Column="1" />
+      <File FileName="EncryptionOperation/Matrice.cs" Line="17" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Program.cs" relfile="EncryptionOperation/Program.cs" line="39" column="1" />
-      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Chiffrement.cs" relfile="EncryptionOperation/Chiffrement.cs" line="235" column="1" />
+      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Program.cs" relfile="EncryptionOperation/Program.cs" line="20" column="1" />
+      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Chiffrement.cs" relfile="EncryptionOperation/Chiffrement.cs" line="262" column="1" />
+      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Program.cs" relfile="EncryptionOperation/Program.cs" line="18" column="1" />
+      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Chiffrement.cs" relfile="EncryptionOperation/Chiffrement.cs" line="27" column="1" />
+      <Breakpoint file="/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/Chiffrement.cs" relfile="EncryptionOperation/Chiffrement.cs" line="88" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.EncryptionOperation PreferredExecutionTarget="MonoDevelop.Default" />

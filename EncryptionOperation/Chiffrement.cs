@@ -5,8 +5,11 @@ using System.Text;
 
 namespace EncryptionOperation
 {
+
     public static class Chiffrement
     {
+        private static byte[] VI = StringToByteArray("S");
+
         //******************************************
         // Methode de Chiffrement
         // @return 
@@ -14,18 +17,60 @@ namespace EncryptionOperation
         {
             //chiffrement par transposition
             string messageTranspose = Transposition(message, cle);
+            Console.WriteLine("Message transpose --> " + messageTranspose);
 
 
             //CBC
-            byte[] VI = ToBinary('F');
+            int[] resultatCBC =ChiffrementCbc(messageTranspose, VI);
 
-            List<byte[]> listBytes = ChiffrementCbc(messageTranspose,VI);
+            string resultatFinal = "";
+            foreach(int i in resultatCBC)
+            {
+                resultatFinal += ByteArrayToString(IntToByteArray(i))[0];
+            }
+          
+            return resultatFinal;
+        }
 
-            string text = fromCbcToString(listBytes);
 
-       
 
-            return text;
+        //******************************************
+        // Methode de Dechiffrement
+        // @return 
+        public static string Dechiffrer(string messageChiffre, string cle)
+        {
+           
+            //Decomposition du message chiffré en un tableau de bytes
+            byte[] messageDecompose = StringToByteArray(messageChiffre);
+
+            //Dechiffrement CBC
+            int[] resultatCBC = DechiffrementCbc(messageDecompose, VI);
+
+            string resultatFinal = "";
+            foreach (int i in resultatCBC)
+            {
+                resultatFinal += ByteArrayToString(IntToByteArray(i));
+            }
+
+            //transposition message chiffre
+            string messageTranspose = Transposition(messageChiffre, cle);
+            Console.WriteLine("Message transpose :" + messageTranspose);
+
+
+            return resultatFinal;
+            
+
+        }
+
+        public static byte[] OperationXor(byte[] tabA, byte[] tabB)
+        {
+            byte[] unTab = new byte[tabA.Length];
+            for (int i = 0; i < tabA.Length; i++)
+            {
+                unTab[i] = (byte)(tabA[i] ^ tabB[i]);
+            }
+
+            return unTab;
         }
 
 
@@ -77,22 +122,34 @@ namespace EncryptionOperation
 
             IList listKeys = listeTransposition.GetKeyList();
 
-            for (int j = (int)listKeys[0]; j <= listKeys.Count; j++)
+            for (int j = 0; j <= 9; j++)
             {
-
-                int positionDansCle = (int)listeTransposition[j];
-
-                for (int k = 0; k < uneMatrice.RowSize; k++)
+                if (listeTransposition[j] == null) { continue; }
+                else
                 {
+                    int positionDansCle = (int)listeTransposition[j];
 
-                    if (uneMatrice[k, positionDansCle] != null)
-                        messageTranspose += uneMatrice[k, positionDansCle];
 
+                    for (int k = 0; k < uneMatrice.RowSize; k++)
+                    {
+
+                        if (uneMatrice[k, positionDansCle] != null)
+                            messageTranspose += uneMatrice[k, positionDansCle];
+
+                    }
                 }
             }
 
             return messageTranspose;
         }
+
+        public static string TranspositionInverse(string message, string cle)
+        {
+            Matrice uneMatrice = FillMatrice(message, cle);            
+           
+            return uneMatrice.ToString();
+        }
+
 
 
         /**
@@ -157,49 +214,6 @@ namespace EncryptionOperation
 
 
 
-        //******************************************
-        // Methode de Dechiffrement
-        // @return 
-        public static string Dechiffrer(string message, string cle)
-        {
-
-
-            return null;
-        }
-
-
-
-        //******************************************
-        // Methode de Chiffrement
-        // @return byte[]
-        public static byte[] Encodage(string data)
-        {
-            byte[] bytes = Encoding.ASCII.GetBytes(data);
-            return bytes;
-        }
-
-        //******************************************
-        // Methode de Dechiffrement
-        // @return string
-        private static string Decodage(byte[] bytes)
-        {
-            string data = Encoding.ASCII.GetString(bytes);
-            return data;
-        }
-
-
-
-        public static byte[] OperationXor(byte[] tabA, byte[] tabB)
-        {
-            byte[] unTab = new byte[tabA.Length];
-            for(int i =0; i< tabA.Length; i++)
-            {
-                unTab[i] = (byte)(tabA[i] ^ tabB[i]); 
-            }
-
-            return unTab;
-        }
-
         /**
          * Methode qui permet d'afficher les contenues byte par byte d'un character (ex: S -> 10010)
          */
@@ -207,35 +221,86 @@ namespace EncryptionOperation
         {
             foreach (byte b in table)
             {
-                Console.Write(b);
+                Console.Write("/"+b);
             }
         }
 
-        public static List<byte[]> ChiffrementCbc(string messageTranspose, byte[] VI)
+        /** Methode ChiffrementCbc(): permet d'effectuer les operations XOR à partir du message transpos
+         * on retourne un tableau contenant les valeurs entieres des operations
+         */
+        public static int[] ChiffrementCbc(string messageTranspose, byte[] VI)
         {
-            List<byte[]> result= new List<byte[]>();
-            for(int i = 0; i < messageTranspose.Length; i++)
-            {
-                char letter = Char.Parse(messageTranspose.Substring(i, 1));
-                byte[] tabLetter = ToBinary(letter);
-              
+            int[] result= new int[messageTranspose.Length];
+            byte[] msgToByte = StringToByteArray(messageTranspose);
+            for(int i = 0; i < msgToByte.Length; i++)
+            { 
                 if (i == 0)
                 {
-                    byte[] Einitial = OperationXor(tabLetter, VI);
-                    result.Add(Einitial);
+                    result[i] = msgToByte[i] ^ VI[0];
                     
                 }
                 else
-                {   
-                    byte[] Ecourant = OperationXor(tabLetter, result[i - 1]);
-                    result.Add(Ecourant);
+                {
+                    result[i] = msgToByte[i] ^ result[i - 1];
                 }
             }
 
             return result;
         }
 
+        /** Methode
+         * 
+         */
+        public static int[] DechiffrementCbc(byte[] messageChiffre, byte[] VI)
+        {
+            int[] result = new int [messageChiffre.Length];
 
+            for (int i = 0; i < messageChiffre.Length; i++)
+            {
+                if (i == 0)
+                {
+                    result[i] = messageChiffre[i] ^ VI[0];
+
+                }
+                else
+                {
+                    result[i] = messageChiffre[i] ^ messageChiffre[i-1];
+                }
+            }
+
+
+            return result;
+        }
+
+
+
+        /**Methode StringToByteArray(): permet de passer d'une chaine string à un tableau de byte
+         *
+         */
+        public static byte[] StringToByteArray(string chaine)
+        {
+            return Encoding.Default.GetBytes(chaine);
+        }
+
+
+        /**Methode IntToByteArray(): permet de passer d'un entier int à un tableau de byte
+        *
+        */
+        public static byte[] IntToByteArray(int value)
+        {
+            return BitConverter.GetBytes(value);
+        }
+
+        /**Methode ByteArrayToString(): permet de passer d'un tableau de byte à une chaine string
+         * 
+         */
+        public static string ByteArrayToString(byte[] byteArray)
+        {
+            return Encoding.ASCII.GetString(byteArray);
+        }
+
+
+       
         public static string fromCbcToString(List<byte[]> list)
         {
             string result = "";
