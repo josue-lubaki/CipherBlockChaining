@@ -47,15 +47,14 @@ namespace EncryptionOperation
             //Dechiffrement CBC
             int[] resultatCBC = DechiffrementCbc(messageDecompose, VI);
 
-            string resultatFinal = "";
+            string resultat = "";
             foreach (int i in resultatCBC)
             {
-                resultatFinal += ByteArrayToString(IntToByteArray(i));
+                resultat += ByteArrayToString(IntToByteArray(i));
             }
 
             //transposition message chiffre
-            string messageTranspose = TranspositionInverse(messageChiffre, cle);
-            Console.WriteLine("Message transpose :" + messageTranspose);
+            string resultatFinal = TranspositionInvers(resultat, cle);
 
 
             return resultatFinal;
@@ -161,8 +160,6 @@ namespace EncryptionOperation
 
                 }
             }
-
-            //lecture de la matrice 
 
             return uneMatrice;
         }
