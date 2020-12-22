@@ -1,6 +1,6 @@
 ﻿using System;
 /* Matrice.cs  *********************************************************************************************
- **********     @Authors :                                             Date : 04 Décembre 2020    **********
+ **********     @Authors :                                             Date : 23 Décembre 2020    **********
  **********                 * Josue Lubaki                                                        **********
  **********                 * Ismael Coulibaly                                                    **********
  **********                 * Jordan Kuibia                                                       **********
@@ -40,52 +40,6 @@ namespace EncryptionOperation
         public int ColSize
         {
             get { return data.GetLength(1); }
-        }
-
-
-        /**********************************************************************************************/
-        /***************                    OPERATION SUR LES MATRICES                  ***************/
-        /**********************************************************************************************/
-
-
-        /** Opération : Est Carree ? 
-         *  Cette fonction renvoi <<True>> si la Matrice est Carrée (2 par 2 || 3 par 3 ||...) 
-         *  Condition : Nombre de Colonne == Nombres de ligne 
-         *
-         *  @return bool */
-        public bool EstCarree
-        {
-            get
-            {
-                return (RowSize == ColSize) ? true : false;
-            }
-        }
-
-
-   
-        /**********************************************************************************************/
-        /***************                MANIPULATION DES DONNEES DE LA MATRICE          ***************/
-        /**********************************************************************************************/
-        /** Obtenir un élement en particulier du Tableau 
-         *  1er Paramètre : Correspond au numero de Ligne 
-         *  2ème Paramètre : Correspond au numero de la Colonne 
-         *  
-         *  @return double  
-         */
-        public string GetElement(int ligne, int colonne)
-        {
-            return Data[ligne, colonne];
-        }
-
-        /** Modifier un élement en particulier du Tableau
-         *  1er Paramètre : Correspond au numero de Ligne 
-         *  2ème Paramètre : Correspond au numero de la Colonne 
-         *  3ième Paramètre : Correspond à la nouvelle Valeur à Insérer 
-         *  
-         *  @return void    */
-        public void SetElement(int ligne, int colonne, string value)
-        {
-            Data[ligne, colonne] = value;
         }
 
 

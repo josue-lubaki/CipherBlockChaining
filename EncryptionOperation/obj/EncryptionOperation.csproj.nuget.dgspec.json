@@ -1,30 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/EncryptionOperation.csproj": {}
+    "C:\\Users\\PC\\Desktop\\GitLab\\PIF1006-TP3\\travail3_pif1006\\EncryptionOperation\\EncryptionOperation.csproj": {}
   },
   "projects": {
-    "/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/EncryptionOperation.csproj": {
+    "C:\\Users\\PC\\Desktop\\GitLab\\PIF1006-TP3\\travail3_pif1006\\EncryptionOperation\\EncryptionOperation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/EncryptionOperation.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Desktop\\GitLab\\PIF1006-TP3\\travail3_pif1006\\EncryptionOperation\\EncryptionOperation.csproj",
         "projectName": "EncryptionOperation",
-        "projectPath": "/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/EncryptionOperation.csproj",
-        "packagesPath": "/Users/ila/.nuget/packages/",
-        "outputPath": "/Users/ila/Documents/classes/maths pr info 2/travaux/travail3_pif1006/EncryptionOperation/obj/",
+        "projectPath": "C:\\Users\\PC\\Desktop\\GitLab\\PIF1006-TP3\\travail3_pif1006\\EncryptionOperation\\EncryptionOperation.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\Desktop\\GitLab\\PIF1006-TP3\\travail3_pif1006\\EncryptionOperation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/ila/.config/NuGet/NuGet.Config"
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -36,7 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
