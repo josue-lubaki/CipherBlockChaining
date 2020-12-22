@@ -169,9 +169,14 @@ namespace EncryptionOperation
 
                     for (int k = 0; k < uneMatrice.RowSize; k++)
                     {
-                        if (uneMatrice[k, positionDansCle] == null) {
+                        if (uneMatrice[k, positionDansCle] == null && curseur < sizeMessage) {
                             uneMatrice[k, positionDansCle] = messageSansUnicode.Substring(curseur, 1);
                             curseur++;
+                        }
+                        else if (uneMatrice[k, positionDansCle] == null && curseur >=sizeMessage)
+                        {
+                            uneMatrice[k, positionDansCle] = " ";
+
                         }
                     }
                 }
