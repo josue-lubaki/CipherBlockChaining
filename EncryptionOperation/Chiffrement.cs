@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EncryptionOperation
 {
@@ -53,7 +54,7 @@ namespace EncryptionOperation
             }
 
             //transposition message chiffre
-            string messageTranspose = Transposition(messageChiffre, cle);
+            string messageTranspose = TranspositionInverse(messageChiffre, cle);
             Console.WriteLine("Message transpose :" + messageTranspose);
 
 
@@ -74,29 +75,94 @@ namespace EncryptionOperation
         }
 
 
-
+        /**
+         *  Remplissage de la Matrice à partir du message lors de la Transoposition
+         *  @return Matrice
+         */
         private static Matrice FillMatrice(string message, string cle)
         {
-
+            string messageSansUnicode = message.Replace("\0", string.Empty);
             string[] cleSansEspace = cle.Split(' ');// on recupere la cle sans espace
             //longueur de la cle sans espace (=nombre colonne de transposition)
             int longueurCle = cleSansEspace.Length;
-            int longueurMessage = message.Length;
+            int longueurMessage = messageSansUnicode.Length;
 
             //il s'agit du nbLigne que notre Matrice de transposition comporte
             int nbLigne = longueurMessage % longueurCle == 0 ? (longueurMessage / longueurCle) : ((longueurMessage / longueurCle) + 1);
             Matrice uneMatrice = new Matrice(nbLigne, longueurCle);
 
+            
             int curseur = 0; // curseur de deplacement dans la matrice qui designe le caractere courant
             for (int i = 0; i < nbLigne; i++)
             {
                 for (int j = 0; j < longueurCle; j++)
                 {
-                    if (curseur < longueurMessage)
-                        uneMatrice[i, j] = message.ToCharArray()[curseur].ToString();
+                    if (curseur <= (nbLigne * longueurCle))
+                    {
+                        if (curseur >= messageSansUnicode.Length)
+                            uneMatrice[i, j] = " ";
+                        else
+                            uneMatrice[i, j] = messageSansUnicode.ToCharArray()[curseur].ToString();
+                    }
+                        
                     curseur++;
                 }
             }
+
+            return uneMatrice;
+        }
+
+
+        /**
+         *  Remplissage de la Matrice à partir du message lors de la Transoposition
+         *  @return Matrice
+         */
+        private static Matrice FillMatriceTransInvers(string message, string cle)
+        {
+            string messageSansUnicode = message.Replace("\0", string.Empty);
+            string[] cleSansEspace = cle.Split(' ');// on recupere la cle sans espace
+            //longueur de la cle sans espace (=nombre colonne de transposition)
+            int longueurCle = cleSansEspace.Length;
+            int longueurMessage = messageSansUnicode.Length;
+
+            //il s'agit du nbLigne que notre Matrice de transposition comporte
+            int nbLigne = longueurMessage % longueurCle == 0 ? (longueurMessage / longueurCle) : ((longueurMessage / longueurCle) + 1);
+            Matrice uneMatrice = new Matrice(nbLigne, longueurCle);
+
+            //Associer chaque colonne de la Matrice avec son numero de la clé
+            SortedList listeTransposition = new SortedList();//on associe a chaque chiffre de la cle sa position dans la cle
+
+            for (int i = 0; i < cleSansEspace.Length; i++)
+            {
+                listeTransposition.Add(int.Parse(cleSansEspace[i]), i);
+            }
+
+            int curseur = 0;
+            for (int j = 0; j <= 9; j++)
+            {
+
+                if (listeTransposition[j] == null)
+                {
+                    continue;
+                }
+
+                else
+                {
+                    int positionDansCle = (int)listeTransposition[j];
+                    for (int k = 0; k < uneMatrice.RowSize; k++)
+                    {
+                        if (uneMatrice[k, positionDansCle] == null) {
+                            uneMatrice[k, positionDansCle] = messageSansUnicode.Substring(curseur, 1);
+                            curseur++;
+                        }
+                            
+
+                    }
+
+                }
+            }
+
+            //lecture de la matrice 
 
             return uneMatrice;
         }
@@ -147,6 +213,13 @@ namespace EncryptionOperation
         {
             Matrice uneMatrice = FillMatrice(message, cle);            
            
+            return uneMatrice.ToString();
+        }
+
+        public static string TranspositionInvers(string message, string cle)
+        {
+            Matrice uneMatrice = FillMatriceTransInvers(message, cle);
+
             return uneMatrice.ToString();
         }
 

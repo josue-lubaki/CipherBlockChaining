@@ -13,13 +13,13 @@ namespace EncryptionOperation
     {
         static void Main(string[] args)
         {
-            string message = "jonathan";
+            string message = "josue";
             string cle = "9 1 4 5";
             string messageChiffre = Chiffrement.Chiffrer(message,cle);
             Console.WriteLine("Message chiffre ---> "+messageChiffre);
             string messageDechiffre = Chiffrement.Dechiffrer(messageChiffre, cle);
             Console.WriteLine("Message Dechiffre ---> " + messageDechiffre);
-            Console.WriteLine("TRanspose du msg dechiffre = " + Chiffrement.TranspositionInverse(messageDechiffre, cle));
+            Console.WriteLine("TRanspose du msg dechiffre = " + Chiffrement.TranspositionInvers(messageDechiffre, cle));
             
 
             /*byte[] vi = Encoding.ASCII.GetBytes("S");
